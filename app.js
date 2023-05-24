@@ -7,7 +7,7 @@
  * 4. Configure the store
  */
 
-const { createAction, nanoid } = require('@reduxjs/toolkit');
+const { createAction, nanoid, createReducer } = require('@reduxjs/toolkit');
 
 /// Using redux tool kit
 
@@ -29,6 +29,7 @@ const reset = createAction('RESET');
 const incrementBy = createAction('INCREMENT_BY', (amount, user) => {
 	return {
 		payload: {
+			// payload is a required property
 			amount,
 			user,
 			id: nanoid(),
@@ -54,3 +55,22 @@ console.log(incrementBy(120, 'Elee'));
  *  1. builder callback
  *  2. map object notation
  */
+
+// 3. Create reducer - using builder callback notation
+createReducer(initialState, (builder) => {
+	builder.addCase(increment, (state) => {
+		state.counter += 1;
+	});
+
+	builder.addCase(incrementBy, (state, action) => {
+		state.counter += action.payload.amount;
+	});
+
+	builder.addCase(decrement, (state) => {
+		state.counter -= 1;
+	});
+
+	builder.addCase(reset, (state) => {
+		state.counter = 0;
+	});
+});
