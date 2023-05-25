@@ -7,7 +7,12 @@
  * 4. Configure the store
  */
 
-const { createAction, nanoid, createReducer } = require('@reduxjs/toolkit');
+const {
+	createAction,
+	nanoid,
+	createReducer,
+	configureStore,
+} = require('@reduxjs/toolkit');
 
 /// Using redux tool kit
 
@@ -37,11 +42,11 @@ const incrementBy = createAction('INCREMENT_BY', (amount, user) => {
 	};
 });
 
-console.log(increment);
+// console.log(increment);
 // pass payload to action
-console.log(increment(200));
+// console.log(increment(200));
 // use of customized action
-console.log(incrementBy(120, 'Elee'));
+// console.log(incrementBy(120, 'Elee'));
 
 /**
  * @desc Reducer definition
@@ -77,7 +82,7 @@ const counterSlice = createReducer(initialState, (builder) => {
 
 // create reducer using map object notation
 /**
- * @desc we using the createAction() when creating reducers using map object notation
+ * @desc we use the createAction() when creating reducers using map object notation
  * syntax:
  * createAction(<INITIAL_STATE>, {
  * 	[ACTION]: (state) => {  // do state update here    }
@@ -100,3 +105,21 @@ const counterSlice = createReducer(initialState, (builder) => {
 // 		state.counter += action.payload.amount;
 // 	},
 // });
+
+// 4. Configure the redux store
+/**
+ * @desc configureStore() is used to create and configure the redux store
+ * configureStore() accepts a single param which is an object and we specify the reducer
+ * within the configuration object.
+ */
+const store = configureStore({
+	reducer: counterSlice,
+});
+
+// dispatch action
+store.dispatch(increment());
+store.dispatch(increment());
+store.dispatch(increment());
+
+// get current state from redux store
+console.log(store.getState());
