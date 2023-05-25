@@ -85,17 +85,18 @@ const counterSlice = createReducer(initialState, (builder) => {
  *
  * Note: Creating reducers using builder callback notation is preferred over map object notation
  */
-const counterSliceMapNotion = createAction(initialState, {
-	[increment]: (state) => {
-		state.counter += 1;
-	},
-	[decrement]: (state) => {
-		state.counter -= 1;
-	},
-	[reset]: (state) => {
-		state.counter = 0;
-	},
-	[incrementBy]: (state, action) => {
-		state.counter += action.payload.amount;
-	},
-});
+// Example
+// const counterSliceMapNotion = createAction(initialState, {
+// 	[increment]: (state) => {
+// 		state.counter += 1;
+// 	},
+// 	[decrement]: (state) => {
+// 		state.counter -= 1;
+// 	},
+// 	[reset]: (state) => {
+// 		state.counter = 0;
+// 	},
+// 	[incrementBy]: (state, action) => {
+// 		state.counter += action.payload.amount;
+// 	},
+// });
