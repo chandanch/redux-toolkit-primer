@@ -1,4 +1,8 @@
-const { createAsyncThunk, createSlice } = require('@reduxjs/toolkit');
+const {
+	createAsyncThunk,
+	createSlice,
+	configureStore,
+} = require('@reduxjs/toolkit');
 const axios = require('axios');
 
 // 1. create an initial state
@@ -23,11 +27,16 @@ const initialState = {
 
  *
  * createAsyncThunk() returns a standard Redux thunk action creator.
+ * createAsyncThunk() accepts 2 parameters:
+ *  1. arg - contains the value that was passed when the action was dispatched
+ * 2. thunkapi - an object containing all of the parameters that are normally passed to a Redux thunk function,
  */
 
-const fetchPosts = createAsyncThunk('posts/fetch', async () => {
-	const data = await axios.get('https://jsonplaceholder.typicode.com/posts');
-	return data;
+const fetchPosts = createAsyncThunk('posts/fetch', async (arg, thunkapi) => {
+	const response = await axios.get(
+		'https://jsonplaceholder.typicode.com/posts'
+	);
+	return response.data;
 });
 
 // 3. create a slice
@@ -52,4 +61,23 @@ const postSlice = createSlice({
 			state.loading = false;
 		});
 	},
+});
+
+// 4. generate reducer
+const postsReducer = postSlice.reducer;
+
+// 4. configure redux store
+const store = configureStore({
+	reducer: postsReducer,
+});
+
+// dispatch the action
+store.dispatch(fetchPosts());
+
+// handling thunk results
+store.dispatch(fetchPosts());
+
+// subscribe to store changes
+store.subscribe(() => {
+	console.log(store.getState());
 });
