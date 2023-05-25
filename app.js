@@ -52,12 +52,12 @@ console.log(incrementBy(120, 'Elee'));
  * createReducer() - Enables us to create redux reducer functions
  * allows us to mutate the state directly, since it uses imer internally
  * In Rtk, there are 2 ways of creating reducer:
- *  1. builder callback
+ *  1. builder callback notation
  *  2. map object notation
  */
 
 // 3. Create reducer - using builder callback notation
-createReducer(initialState, (builder) => {
+const counterSlice = createReducer(initialState, (builder) => {
 	builder.addCase(increment, (state) => {
 		state.counter += 1;
 	});
@@ -73,4 +73,29 @@ createReducer(initialState, (builder) => {
 	builder.addCase(reset, (state) => {
 		state.counter = 0;
 	});
+});
+
+// create reducer using map object notation
+/**
+ * @desc we using the createAction() when creating reducers using map object notation
+ * syntax:
+ * createAction(<INITIAL_STATE>, {
+ * 	[ACTION]: (state) => {  // do state update here    }
+ * })
+ *
+ * Note: Creating reducers using builder callback notation is preferred over map object notation
+ */
+const counterSliceMapNotion = createAction(initialState, {
+	[increment]: (state) => {
+		state.counter += 1;
+	},
+	[decrement]: (state) => {
+		state.counter -= 1;
+	},
+	[reset]: (state) => {
+		state.counter = 0;
+	},
+	[incrementBy]: (state, action) => {
+		state.counter += action.payload.amount;
+	},
 });
