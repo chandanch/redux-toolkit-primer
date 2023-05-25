@@ -12,7 +12,10 @@ const {
 	nanoid,
 	createReducer,
 	configureStore,
+	getDefaultMiddleware,
 } = require('@reduxjs/toolkit');
+
+const logger = require('redux-logger').createLogger();
 
 /// Using redux tool kit
 
@@ -114,12 +117,18 @@ const counterSlice = createReducer(initialState, (builder) => {
  */
 const store = configureStore({
 	reducer: counterSlice,
+	/*	enhance the redux store by adding a custom middleware i.e. redux-logger
+		to add middleware to redux store, pass an callback to middleware property
+		invoke the getDefaultMiddleware() and use the conact() to add the desired logger
+	*/
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 // dispatch action
 store.dispatch(increment());
 store.dispatch(increment());
 store.dispatch(increment());
+store.dispatch(incrementBy(120, 'Emee'));
 
 // get current state from redux store
 console.log(store.getState());
