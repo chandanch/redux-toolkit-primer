@@ -33,10 +33,16 @@ const initialState = {
  */
 
 const fetchPosts = createAsyncThunk('posts/fetch', async (arg, thunkapi) => {
-	const response = await axios.get(
-		'https://jsonplaceholder.typicode.com/posts'
-	);
-	return response.data;
+	try {
+		const response = await axios.get(
+			'https://jsonplaceholder.typicode.com/posts'
+		);
+		return response.data;
+	} catch (error) {
+		// handle api request error and throw error
+		// return a rejected response with a defined payload and meta data
+		thunkapi.rejectWithValue(error.response);
+	}
 });
 
 // 3. create a slice
