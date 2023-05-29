@@ -23,8 +23,7 @@ const initialState = {
  * generates action types that resembles the promise lifcycle(pending, fulfilled, rejected)
  * these action types are prefixed with an action type string
  * 
- * A string that will be used to generate additional Redux action type constants, representing the lifecycle of an async request:
-
+ * A string that will be used to generate additional Redux action type constants, representing the lifecycle of an async request
  *
  * createAsyncThunk() returns a standard Redux thunk action creator.
  * createAsyncThunk() accepts 2 parameters:
